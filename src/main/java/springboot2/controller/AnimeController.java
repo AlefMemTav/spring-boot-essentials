@@ -12,6 +12,7 @@ import springboot2.util.DateUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.validation.Valid;
 import springboot2.requests.AnimePostRequestBody;
 import springboot2.requests.AnimePutRequestBody;
 
@@ -41,7 +42,7 @@ public class AnimeController {
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+    public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) {
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
