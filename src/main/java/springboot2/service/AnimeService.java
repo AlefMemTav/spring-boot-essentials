@@ -3,6 +3,7 @@ package springboot2.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import springboot2.domain.Anime;
 import springboot2.exception.BadRequestException;
 import springboot2.mapper.AnimeMapper;
@@ -29,7 +30,8 @@ public class AnimeService {
                 .orElseThrow(()
                         -> new BadRequestException("Id not found"));
     }
-
+    
+    @Transactional(rollbackFor = Exception.class)
     public Anime save(AnimePostRequestBody animePostRequestBody) {
         return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }
