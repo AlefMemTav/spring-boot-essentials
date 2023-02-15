@@ -13,6 +13,8 @@ import springboot2.util.DateUtil;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import springboot2.requests.AnimePostRequestBody;
 import springboot2.requests.AnimePutRequestBody;
 
@@ -26,9 +28,9 @@ public class AnimeController {
     private final DateUtil dateUtil;
 
     @GetMapping
-    public ResponseEntity<List<Anime>> list() {
+    public ResponseEntity<Page<Anime>> list(Pageable pageable) {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return ResponseEntity.ok(animeService.listAll());
+        return ResponseEntity.ok(animeService.listAll(pageable));
     }
 
     @GetMapping(path = "/{id}")
