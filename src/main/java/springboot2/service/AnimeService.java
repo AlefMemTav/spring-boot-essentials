@@ -22,17 +22,21 @@ public class AnimeService {
     public Page<Anime> listAll(Pageable pageable) {
         return animeRepository.findAll(pageable);
     }
-    
+
+    public List<Anime> listAllNonPageable() {
+        return animeRepository.findAll();
+    }
+
     public List<Anime> findByName(String name) {
         return animeRepository.findByName(name);
     }
-    
+
     public Anime findByIdOrThrowBadRequestException(long id) {
         return animeRepository.findById(id)
                 .orElseThrow(()
                         -> new BadRequestException("Id not found"));
     }
-    
+
     @Transactional(rollbackFor = Exception.class)
     public Anime save(AnimePostRequestBody animePostRequestBody) {
         return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
