@@ -9,4 +9,9 @@ spring:
     jpa: 
         hibernate:
             ddl-auto: update
-        show-sql: true
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        type: trace
