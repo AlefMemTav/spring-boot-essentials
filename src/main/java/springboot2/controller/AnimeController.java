@@ -13,7 +13,6 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import springboot2.requests.AnimePostRequestBody;
@@ -43,7 +42,6 @@ public class AnimeController {
     }
 
     @GetMapping(path = "by-id/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Anime> findByIdAuthenticationPrincipal(@PathVariable long id,
             @AuthenticationPrincipal UserDetails userDetails) {
         log.info(userDetails);
@@ -56,12 +54,11 @@ public class AnimeController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) {
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/admin/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

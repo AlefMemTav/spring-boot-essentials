@@ -33,6 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 //                csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .authorizeRequests()
+                .antMatchers("/animes/admin/**").hasRole("ADMIN")
+                .antMatchers("/animes/**").hasRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -47,11 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         log.info("Password encoded {}", passwordEncoder.encode("academy"));
 
         auth.inMemoryAuthentication()
-                .withUser("william2")
+                .withUser("william")
                 .password(passwordEncoder.encode("academy"))
                 .roles("USER", "ADMIN")
                 .and()
-                .withUser("devdojo2")
+                .withUser("devdojo")
                 .password(passwordEncoder.encode("academy"))
                 .roles("USER");
 
